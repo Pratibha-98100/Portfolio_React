@@ -193,7 +193,7 @@ export const education =[
         img:lpu,
         school: "Lovely Professional University",
         date: "Oct 2023-Jul 2025",
-        grade: "7.3 CGPA",
+        grade: "7.83 CGPA",
         desc: "Master of Computer Application",
         degree: "Post Graduation",
     },
