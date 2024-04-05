@@ -21,7 +21,7 @@ export const Bio ={
     "I have completed my B.Sc in Computer Application from Maharaja Chhatrasal Bundelkhand University and currently working as traniee at ACCIOJOB and also MCA student of Lovely Professional University. I am a fresher with having a strong track record of success in my previous roles, and I have transferable skills that I believe will be valuable in this position as well. I am also a team player and always willing to go the extra mile. I have been looking to transition in this role and I am really excited about the opportunity with your organization. I am certain with my enthusiam for this technology and quick learning I can make a valuable contribution to your team.",
   github: "https://github.com/pratibha-98100",
   resume:
-    "https://storage.googleapis.com/acciojob-user-content/resumes/b4dfc614-8b76-4c2a-a1f8-95aa90c8ecc5-Pratibha%20(new).pdf",
+    "https://drive.google.com/file/d/14GCa2_bbWzbwWECgyAUOuZWgIOnN79-c/view?usp=sharing",
   linkedin: "https://www.linkedin.com/in/pratibha-yadav-73260b216/",
 }
 
