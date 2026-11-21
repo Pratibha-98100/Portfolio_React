@@ -5,8 +5,11 @@ import { Bio } from "../Data/constants";
 import { MenuRounded } from "@mui/icons-material";
 
 const Nav = styled.div`
-  background-color: ${({ theme }) => theme.bg};
-  height: 80px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid ${({ theme }) => theme.border};
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,11 +17,12 @@ const Nav = styled.div`
   position: sticky;
   top: 0;
   z-index: 10;
-  color: white;
+  color: ${({ theme }) => theme.text_primary};
 `;
 const ColorText = styled.div`
   color: ${({ theme }) => theme.primary};
-  font-size: 32px;
+  font-size: 24px;
+  font-weight: 700;
 `;
 
 const NavbarContainer = styled.div`
@@ -34,8 +38,9 @@ const NavLogo = styled(LinkR)`
   display: flex;
   align-items: center;
   width: 80%;
+  gap: 4px;
   padding: 0 6px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
   text-decoration: none;
   color: inherit;
@@ -84,16 +89,17 @@ const GithubButton = styled.a`
   justify-content: center;
   display: flex;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 8px 18px;
+  font-size: 15px;
   font-weight: 500;
-  transition: all 0.6s ease-in-out;
+  transition: all 0.3s ease-in-out;
   text-decoration: none;
+  white-space: nowrap;
   &:hover {
     background: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.text_primary};
+    color: white;
   }
 `;
 
@@ -118,16 +124,16 @@ const MobileMenu = styled.ul`
   list-style: none;
   width: 100%;
   padding: 12px 40px 24px 40px;
-  background: ${({ theme }) => theme.card_light + 99};
+  background: white;
   position: absolute;
-  top: 80px;
+  top: 72px;
   right: 0;
 
   transition: all 0.6s ease-in-out;
   transform: ${({ isOpen }) =>
     isOpen ? "translateY(0)" : "translateY(-100%)"};
   border-radius: 0 0 20px 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: ${({ theme }) => theme.shadow};
   opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
@@ -139,9 +145,8 @@ const Navbar = () => {
     <Nav>
       <NavbarContainer>
         <NavLogo to="/">
-          <ColorText>&lt;</ColorText>Pratibha Yadav
-          <div style={{ color: theme.primary }}>/</div>
-          <ColorText>&gt;</ColorText>
+          <ColorText>&lt;/&gt;</ColorText>
+          <span style={{ marginLeft: 8 }}>Pratibha Yadav</span>
         </NavLogo>
 
         <MobileIcon onClick={() => setIsOpen(!isOpen)}>
@@ -178,7 +183,7 @@ const Navbar = () => {
               target="_Blank"
               style={{
                 background: theme.primary,
-                color: theme.text_primary,
+                color: "white",
               }}
             >
               Github Profile

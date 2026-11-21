@@ -29,11 +29,21 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 52px;
+  font-size: 42px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+  &::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: ${({ theme }) => theme.primary};
+  }
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -41,10 +51,13 @@ const Title = styled.div`
 `;
 
 const Desc = styled.div`
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.6;
   text-align: center;
-  font-weight: 600;
-  color: black;
+  font-weight: 400;
+  max-width: 640px;
+  padding: 0 16px;
+  color: ${({ theme }) => theme.text_secondary};
   @media (max-width: 768px) {
     font-size: 16px;
   }

@@ -6,26 +6,27 @@ const Card = styled.div`
   height: 490px;
   background-color: ${({ theme }) => theme.card};
   cursor: pointer;
-  border-radius: 10px;
-  box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  border: 1px solid ${({ theme }) => theme.border};
+  box-shadow: ${({ theme }) => theme.shadow};
   overflow: hidden;
-  padding: 26px 20px;
+  padding: 18px 18px 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 50px 4px rgba(0, 0, 0, 0.6);
-    filter: brightness(1.1);
+    transform: translateY(-6px);
+    box-shadow: ${({ theme }) => theme.shadow_hover};
+    border-color: ${({ theme }) => theme.primary};
   }
 `;
 const Image = styled.img`
   width: 100%;
   height: 180px;
   background-color: ${({ theme }) => theme.white};
-  border-radius: 10px;
-  box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+  border-radius: 14px;
 `;
 const Tags = styled.div`
   width: 100%;
@@ -37,11 +38,11 @@ const Tags = styled.div`
 `;
 const Tag = styled.div`
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   color: ${({ theme }) => theme.primary};
-  background-color: ${({ theme }) => theme.primary + 15};
-  padding: 2px 8px;
-  border-radius: 10px;
+  background-color: ${({ theme }) => theme.primary_soft};
+  padding: 4px 10px;
+  border-radius: 999px;
 `;
 const Details = styled.div`
   width: 100%;
@@ -52,8 +53,8 @@ const Details = styled.div`
 `;
 const Title = styled.div`
   font-size: 20px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_secondary};
+  font-weight: 700;
+  color: ${({ theme }) => theme.text_primary};
   overflow: hidden;
   display: -webkit-box;
   max-width: 100%;
@@ -66,14 +67,16 @@ const Date = styled.div`
   font-size: 12px;
   margin-left: 2px;
   font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary + 80};
+  color: ${({ theme }) => theme.soft2};
   @media only screen and (max-width: 768px) {
     font-size: 10px;
   }
 `;
 const Description = styled.div`
   font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary + 99};
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 14px;
+  line-height: 1.6;
   overflow: hidden;
   margin-top: 8px;
   display: -webkit-box;

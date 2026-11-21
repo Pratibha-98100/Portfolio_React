@@ -11,7 +11,6 @@ import {
   headContentAnimation,
   headTextAnimation,
 } from "../../Utils/motion";
-import StarCanvas from "../Canvas/Stars";
 
 const HeroContainer = styled.div`
   display: flex;
@@ -74,8 +73,9 @@ const HeroRightContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-weight: 700;
-  font-size: 50px;
+  font-weight: 800;
+  font-size: 54px;
+  letter-spacing: -1px;
   color: ${({ theme }) => theme.text_primary};
   line-height: 68px;
 
@@ -94,6 +94,7 @@ const TextLoop = styled.div`
   font-weight: 600;
   font-size: 32px;
   display: flex;
+  align-items: center;
   gap: 12px;
   color: ${({ theme }) => theme.text_primary};
   line-height: 68px;
@@ -112,13 +113,22 @@ const TextLoop = styled.div`
 const Span = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary_soft};
+  padding: 0 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+`;
+
+const Name = styled.span`
+  color: ${({ theme }) => theme.primary};
 `;
 
 const SubTitle = styled.div`
-  font-size: 20px;
-  line-height: 32px;
-  margin-bottom: 42px;
-  color: ${({ theme }) => theme.text_primary + 95};
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 36px;
+  max-width: 560px;
+  color: ${({ theme }) => theme.text_secondary};
 
   @media (max-width: 960px) {
     text-align: center;
@@ -136,45 +146,26 @@ const ResumeButton = styled.a`
   appearance: button;
   text-decoration: none;
 
-  width: 95%;
-  max-width: 300px;
+  display: inline-block;
   text-align: center;
-  padding: 16px 0;
-
-  background: hsla(271, 100%, 50%, 1);
-  background: linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -moz-linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  box-shadow: 20px 20px 60px #1f2634, -20px -20px 60px #1f2634;
-  border-radius: 50px;
+  padding: 14px 28px;
+  background: ${({ theme }) => theme.primary};
+  color: white;
+  border-radius: 10px;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
+  box-shadow: 0 8px 24px rgba(91, 43, 214, 0.25);
+  transition: all 0.3s ease-in-out;
 
-     &:hover {
-        transform: scale(1.05);
-    transition: all 0.4s ease-in-out;
-    box-shadow:  20px 20px 60px #1F2634,
-    filter: brightness(1);
-    }    
-    
-    
-    @media (max-width: 640px) {
-        padding: 12px 0;
-        font-size: 18px;
-    } 
-    color: white;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(91, 43, 214, 0.35);
+  }
+
+  @media (max-width: 640px) {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
 `;
 
 const Img = styled.img`
@@ -218,7 +209,6 @@ const Hero = () => {
     <div id="About">
       <HeroContainer>
         <HeroBg>
-          <StarCanvas />
           <HeroBgAnimation />
         </HeroBg>
 
@@ -227,7 +217,7 @@ const Hero = () => {
             <HeroLeftContainer>
               <motion.div {...headTextAnimation}>
                 <Title>
-                  Hi, I am <br /> {Bio.name}
+                  Hi, I am <br /> <Name>{Bio.name}</Name>
                 </Title>
                 <TextLoop>
                   I am a

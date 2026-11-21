@@ -28,11 +28,21 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 52px;
+  font-size: 42px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+  &::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: ${({ theme }) => theme.primary};
+  }
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -40,10 +50,13 @@ const Title = styled.div`
 `;
 
 const Desc = styled.div`
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.6;
   text-align: center;
-  font-weight: 600;
-  color: black;
+  font-weight: 400;
+  max-width: 640px;
+  padding: 0 16px;
+  color: ${({ theme }) => theme.text_secondary};
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -55,7 +68,9 @@ border: 1.5px solid ${({ theme }) => theme.primary};
 color: ${({ theme }) => theme.primary};
 font-size: 16px;
 border-radius: 12px;
-font-weight 500;
+overflow: hidden;
+background: ${({ theme }) => theme.card};
+font-weight: 500;
 margin: 22px 0;
 @media (max-width: 768px){
     font-size: 12px;
@@ -104,7 +119,7 @@ const Projects = ({ openModal, setOpenModal }) => {
             marginBottom: "40px",
           }}
         >
-          Welcome to my Project Section
+          A selection of applications I've designed and built end to end.
         </Desc>
         <ToggleButtonGroup>
           <ToggleButton
@@ -118,9 +133,8 @@ const Projects = ({ openModal, setOpenModal }) => {
             active={toggle === "web app"}
             onClick={() => setToggle("web app")}
           >
-            WEB APP"S
+            WEB APPS
           </ToggleButton>
-          <Divider />
         </ToggleButtonGroup>
         <CardContainer>
           {toggle === "all" &&

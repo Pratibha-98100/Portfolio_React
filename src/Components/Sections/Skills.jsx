@@ -26,11 +26,21 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 52px;
+  font-size: 42px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+  &::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: ${({ theme }) => theme.primary};
+  }
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -38,10 +48,13 @@ const Title = styled.div`
 `;
 
 const Desc = styled.div`
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.6;
   text-align: center;
-  font-weight: 600;
-  color: black;
+  font-weight: 400;
+  max-width: 640px;
+  padding: 0 16px;
+  color: ${({ theme }) => theme.text_secondary};
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -49,38 +62,43 @@ const Desc = styled.div`
 
 const SkillsContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
   margin-top: 20px;
-  gap: 50px;
-  justify-content: center;
+  gap: 32px;
+  padding: 0 16px;
+  & > div {
+    height: 100%;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 const Skill = styled.div`
   width: 100%;
-  max-width: 500px;
-  background-color: rgba(17, 25, 40, 0.83);
-  border: 1px solid rgba(255, 255, 255, 0.125);
-  box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
-  border-radius: 16px;
-  padding: 18px 36px;
-
-  @media (max-width: 768px) {
-    max-width: 400px;
-    padding: 10px 36px;
+  height: 100%;
+  background-color: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.border};
+  box-shadow: ${({ theme }) => theme.shadow};
+  border-radius: 20px;
+  padding: 24px 32px;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadow_hover};
   }
 
   @media (max-width: 500px) {
-    max-width: 330px;
-    padding: 10px 36px;
+    padding: 18px 16px;
   }
 `;
 
 const SkillTitle = styled.div`
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
-  color: ${({ theme }) => theme.text_secondary};
+  color: ${({ theme }) => theme.primary};
 `;
 
 const SkillList = styled.div`
@@ -91,12 +109,18 @@ const SkillList = styled.div`
   margin-bottom: 20px;
 `;
 const SkillItem = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_primary + 80};
-  border: 1px solid ${({ theme }) => theme.text_primary + 80};
+  font-size: 15px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_primary};
+  background: ${({ theme }) => theme.bg};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 10px 14px;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    border-color: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.primary_soft};
+  }
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,19 +151,25 @@ const Skills = () => {
             marginBottom: "40px",
           }}
         >
-          Here are some of my skills on which I have been working on for the
-          past 1 years.
+          The tools and technologies I use to build secure, scalable products
+          — sharpened over 2+ years of hands-on work.
         </Desc>
 
         <SkillsContainer>
           {skills.map((skill, index) => (
-            <Tilt>
-              <Skill key={`skill-${index}`}>
+            <Tilt key={`skill-${index}`}>
+              <Skill>
                 <SkillTitle>{skill.title}</SkillTitle>
                 <SkillList>
                   {skill.skills.map((item, index_x) => (
                     <SkillItem key={`skill-x-${index_x}`}>
-                      <SkillImage src={item.image} />
+                      {item.image && (
+                        <SkillImage
+                          src={item.image}
+                          alt=""
+                          onError={(e) => (e.currentTarget.style.display = "none")}
+                        />
+                      )}
                       {item.name}
                     </SkillItem>
                   ))}

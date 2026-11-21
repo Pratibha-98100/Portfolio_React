@@ -1,7 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import emailjs from "@emailjs/browser";
 import EarthCanvas from "../Canvas/Earth";
+
+// FormSubmit forwards every message to this inbox (no password or server needed).
+// FormSubmit forwards every message to Gmail. The ID below is its private
+// alias for pratibha98100@gmail.com (keeps the address hidden).
+const FORM_ENDPOINT =
+  "https://formsubmit.co/ajax/96f7040f9a2531d83fd6b9440512b8b0";
 
 const Container = styled.div`
   display: flex;
@@ -30,11 +35,21 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 52px;
+  font-size: 42px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+  &::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: ${({ theme }) => theme.primary};
+  }
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -42,10 +57,13 @@ const Title = styled.div`
 `;
 
 const Desc = styled.div`
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.6;
   text-align: center;
-  font-weight: 600;
-  color: black;
+  font-weight: 400;
+  max-width: 640px;
+  padding: 0 16px;
+  color: ${({ theme }) => theme.text_secondary};
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -55,11 +73,11 @@ const ContactForm = styled.form`
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(17, 25, 40, 0.83);
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  background-color: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.border};
   padding: 32px;
-  border-radius: 12px;
-  box-shadow: rgba(23, 92, 230, 0.1) 0px 4px 24px;
+  border-radius: 20px;
+  box-shadow: ${({ theme }) => theme.shadow};
   margin-top: 28px;
   gap: 12px;
 `;
@@ -71,10 +89,10 @@ const ContactTitle = styled.div`
 `;
 const ContactInput = styled.input`
   flex: 1;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary + 50};
+  background-color: ${({ theme }) => theme.bg};
+  border: 1px solid ${({ theme }) => theme.border};
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.text_primary};
   border-radius: 12px;
   padding: 12px 16px;
@@ -84,10 +102,10 @@ const ContactInput = styled.input`
 `;
 const ContactInputMessage = styled.textarea`
   flex: 1;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary + 50};
+  background-color: ${({ theme }) => theme.bg};
+  border: 1px solid ${({ theme }) => theme.border};
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.text_primary};
   border-radius: 12px;
   padding: 12px 16px;
@@ -99,52 +117,60 @@ const ContactButton = styled.input`
   width: 100%;
   text-decoration: none;
   text-align: center;
-  background: hsla(271, 100%, 50%, 1);
-  background: linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -moz-linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
+  background: ${({ theme }) => theme.primary};
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(91, 43, 214, 0.25);
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-2px);
+  }
   padding: 13px 16px;
   margin-top: 2px;
   border-radius: 12px;
   border: none;
-  color: ${({ theme }) => theme.text_primary};
-  font-size: 18px;
+  color: white;
+  font-size: 17px;
   font-weight: 600;
 `;
 
 const Contact = () => {
   const form = useRef();
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    emailjs
-      .sendForm(
-        "service_tox7kqs",
-        "template_nv7k7mj",
-        form.current,
-        "SybVGsYS52j2TfLbi"
-      )
-      .then(
-        (result) => {
-          alert("Message Sent");
-          form.current.resut();
+    const data = Object.fromEntries(new FormData(form.current));
+    if (data._honey) return; // bot filled the hidden field
+    setSending(true);
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        (error) => {
-          alert(error);
-        }
-      );
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+          _subject: `[Portfolio] ${data.subject}`,
+          _replyto: data.email,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || String(result.success) !== "true") {
+        throw new Error(result.message || "Something went wrong.");
+      }
+      alert("Message sent! I'll get back to you soon.");
+      form.current.reset();
+    } catch (err) {
+      alert(`Sorry, the message could not be sent. ${err.message}`);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -155,13 +181,24 @@ const Contact = () => {
         <Desc>
           Feel free to reach out to me for any questions or opportunities!
         </Desc>
-        <ContactForm onSubmit={handleSubmit}>
+        <ContactForm ref={form} onSubmit={handleSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Message" name="message" rows={4} />
-          <ContactButton type="submit" value="Send" />
+          <ContactInput type="email" placeholder="Your Email" name="email" required />
+          <ContactInput placeholder="Your Name" name="name" required />
+          <input
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            style={{ display: "none" }}
+          />
+          <ContactInput placeholder="Subject" name="subject" required />
+          <ContactInputMessage placeholder="Message" name="message" rows={4} required />
+          <ContactButton
+            type="submit"
+            value={sending ? "Sending..." : "Send"}
+            disabled={sending}
+          />
         </ContactForm>
       </Wrapper>
     </Container>

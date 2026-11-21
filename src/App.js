@@ -4,9 +4,9 @@ import Navbar from "./Components/Navbar";
 import { BrowserRouter } from "react-router-dom";
 import Hero from "./Components/Sections/Hero";
 import Skills from "./Components/Sections/Skills";
-import StarCanvas from "./Components/Canvas/Stars";
 import { AnimatePresence } from "framer-motion";
 import Education from "./Components/Sections/Education";
+import Experience from "./Components/Sections/Experience";
 
 import Projects from "./Components/Sections/Projects";
 import Contact from "./Components/Sections/Contact";
@@ -22,19 +22,18 @@ const Body = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding-bottom: 100px;
+  padding: 40px 0 100px;
   background: linear-gradient(
       38.73deg,
-      rgba(204, 0, 187, 0.15) 0%,
-      rgba(201, 32, 184, 0) 50%
+      rgba(91, 43, 214, 0.06) 0%,
+      rgba(91, 43, 214, 0) 50%
     ),
     linear-gradient(
       141.27deg,
-      rgba(0, 70, 209, 0) 50%,
-      rgba(0, 70, 209, 0.15) 100%
+      rgba(56, 189, 248, 0) 50%,
+      rgba(56, 189, 248, 0.06) 100%
     );
   width: 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
 
 function App() {
@@ -44,13 +43,12 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Body>
-          <StarCanvas />
           <AnimatePresence>
             <div>
               <Hero />
               <Wrapper>
                 <Skills />
-                {/* <Experience /> */}
+                <Experience />
               </Wrapper>
               <Projects openModal={openModal} setOpenModal={setOpenModal} />
               <Wrapper>

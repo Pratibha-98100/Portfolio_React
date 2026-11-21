@@ -7,6 +7,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 const FooterContainer = styled.div`
   width: 100%;
   padding: 2rem 0;
+  background: white;
+  border-top: 1px solid ${({ theme }) => theme.border};
   display: flex;
   justify-content: center;
   position: relative;
@@ -50,7 +52,8 @@ const Nav = styled.nav`
 const NavLink = styled.a`
   color: ${({ theme }) => theme.text_primary};
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
   transition: color 0.2s ease-in-out;
   &:hover {
     color: ${({ theme }) => theme.primary};
@@ -100,7 +103,7 @@ const Footer = () => {
           </SocialMediaIcon>
     
         </SocialMediaIcons>
-        <Copyright>&copy; 2024 Pratibha Yadav. All rights reserved.</Copyright>
+        <Copyright>&copy; {new Date().getFullYear()} Pratibha Yadav. All rights reserved.</Copyright>
       </FooterWrapper>
     </FooterContainer>
   );
